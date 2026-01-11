@@ -1,39 +1,31 @@
 import { Routes, Route, Link } from 'react-router-dom'
+import Home from './pages/Home'
 import ThemePage from './pages/ThemePage'
 import TwitterPage from './pages/TwitterPage'
 import SearchPage from './pages/SearchPage'
-// Import new pages
-import BlogPage from './pages/BlogPage'
-import SinglePostPage from './pages/SinglePostPage'
+import ColorChange from './pages/ColorChange'
 import NotFoundPage from './pages/NotFoundPage'
+import Header from './components/Header'
+import Footer from './components/Footer'
 
 function App() {
   return (
     <div>
-      <nav style={{ padding: '20px', background: '#eee', display: 'flex', gap: '15px' }}>
-        <Link to="/">Home (Theme)</Link>
-        <Link to="/twitter">Twitter</Link>
-        <Link to="/search">Search</Link>
-        {/* New Link */}
-        <Link to="/blog">Blog</Link>
-      </nav>
+      <Header />
 
-      <div style={{ padding: '20px' }}>
+      <div style={{ padding: '20px',height:'80vh' }}>
         <Routes>
-          <Route path="/" element={<ThemePage />} />
+          <Route path="/" element={<Home />} />
           <Route path="/twitter" element={<TwitterPage />} />
           <Route path="/search" element={<SearchPage />} />
-          
-          {/* New Routes */}
-          <Route path="/blog" element={<BlogPage />} />
-          
-          {/* The :id part is a variable placeholder */}
-          <Route path="/blog/:id" element={<SinglePostPage />} />
+           <Route path="/color-change" element={<ColorChange />} />
+
           
           {/* The * is a wildcard for "anything else" */}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
+         <Footer />
     </div>
   )
 }
