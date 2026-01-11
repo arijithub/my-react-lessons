@@ -1,28 +1,39 @@
-import { useState } from 'react'
+import { Routes, Route, Link } from 'react-router-dom'
+import ThemePage from './pages/ThemePage'
+import TwitterPage from './pages/TwitterPage'
+import SearchPage from './pages/SearchPage'
+// Import new pages
+import BlogPage from './pages/BlogPage'
+import SinglePostPage from './pages/SinglePostPage'
+import NotFoundPage from './pages/NotFoundPage'
 
 function App() {
-  // 1. Create a "State" variable to hold the data
-  const [name, setName] = useState("")
-
-  // 2. Create a function to handle the typing
-  const handleChange = (e) => {
-    setName(e.target.value)
-  }
-
   return (
-    <div style={{ padding: '50px' }}>
-      <h1>React Live Typing</h1>
-      
-      {/* 3. The Input Field */}
-      <input 
-        type="text" 
-        placeholder="Type a name..." 
-        onChange={handleChange}
-        style={{ padding: '10px', fontSize: '16px' }}
-      />
+    <div>
+      <nav style={{ padding: '20px', background: '#eee', display: 'flex', gap: '15px' }}>
+        <Link to="/">Home (Theme)</Link>
+        <Link to="/twitter">Twitter</Link>
+        <Link to="/search">Search</Link>
+        {/* New Link */}
+        <Link to="/blog">Blog</Link>
+      </nav>
 
-      {/* 4. Display the data dynamically */}
-      <h3>Result: {name}</h3>
+      <div style={{ padding: '20px' }}>
+        <Routes>
+          <Route path="/" element={<ThemePage />} />
+          <Route path="/twitter" element={<TwitterPage />} />
+          <Route path="/search" element={<SearchPage />} />
+          
+          {/* New Routes */}
+          <Route path="/blog" element={<BlogPage />} />
+          
+          {/* The :id part is a variable placeholder */}
+          <Route path="/blog/:id" element={<SinglePostPage />} />
+          
+          {/* The * is a wildcard for "anything else" */}
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </div>
     </div>
   )
 }
