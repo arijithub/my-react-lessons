@@ -1,4 +1,9 @@
 import { Routes, Route, Link } from 'react-router-dom'
+import './assets/css/bootstrap.min.css'
+import './assets/css/style.css'
+import './assets/css/responsive.css'
+
+
 import Home from './pages/Home'
 import ThemePage from './pages/ThemePage'
 import TwitterPage from './pages/TwitterPage'
