@@ -355,6 +355,7 @@
 @media (max-width: 575px) {
     .banner_bg_main {
         background-size: cover;
+        height: 100vh;
     }
     .header_section_top {
         display: none;

@@ -1,15 +1,13 @@
-/* --------------------------------------------------------------------- File Name: style.css --------------------------------------------------------------------- */
-/*--------------------------------------------------------------------- import Files ---------------------------------------------------------------------*/
-
-@import url(animate.min.css);
-@import url(normalize.css);
-@import url(icomoon.css);
-@import url(meanmenu.css);
-@import url(owl.carousel.min.css);
-@import url(slick.css);
-@import url(jquery.fancybox.min.css);
-@import url(jquery-ui.css);
-@import url(nice-select.css);
+@import url('./animate.min.css');
+@import url('./normalize.css');
+@import url('./icomoon.css');
+@import url('./meanmenu.css');
+@import url('./owl.carousel.min.css');
+/* Removed swiper.min.css, not found in directory */
+@import url('./slick.css');
+@import url('./jquery.fancybox.min.css');
+@import url('./jquery-ui.css');
+@import url('./nice-select.css');
 
 /*--------------------------------------------------------------------- skeleton ---------------------------------------------------------------------*/
 

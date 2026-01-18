@@ -8,10 +8,10 @@ import flagUk from '../assets/images/flag-uk.png'
 import flagFr from '../assets/images/flag-france.png'
 
 export default function Header() {
-  const [navOpen, setNavOpen] = useState(false);
+  const [isNavOpen, setIsNavOpen] = useState(false)
 
-  const openNav = () => setNavOpen(true);
-  const closeNav = () => setNavOpen(false);
+  const openNav = () => setIsNavOpen(true)
+  const closeNav = () => setIsNavOpen(false)
 
   return (
     <>
@@ -41,7 +41,7 @@ export default function Header() {
           <div className="row">
             <div className="col-sm-12">
               <div className="logo">
-                <Link to="/"><img src={logo} alt="Logo" /></Link>
+                <Link to="/"><img src={logo} alt="logo" /></Link>
               </div>
             </div>
           </div>
@@ -54,9 +54,8 @@ export default function Header() {
         <div className="container">
           <div className="containt_main">
             
-            {/* Side Navigation */}
-            <div id="mySidenav" className="sidenav" style={{ width: navOpen ? '250px' : '0' }}>
-              <a href="#" className="closebtn" onClick={closeNav}>&times;</a>
+            <div id="mySidenav" className="sidenav" style={{ width: isNavOpen ? '250px' : '0' }}>
+              <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>&times;</a>
               <Link to="/">Home</Link>
               <Link to="/fashion">Fashion</Link>
               <Link to="/electronic">Electronic</Link>
@@ -64,7 +63,7 @@ export default function Header() {
             </div>
             
             <span className="toggle_icon" onClick={openNav}>
-              <img src={toggleIcon} alt="Toggle" />
+              <img src={toggleIcon} alt="toggle" />
             </span>
 
             <div className="dropdown">
@@ -86,7 +85,6 @@ export default function Header() {
             </div>
 
             <div className="main">
-              {/* Search Bar */}
               <div className="input-group">
                 <input type="text" className="form-control" placeholder="Search this blog" />
                 <div className="input-group-append">
@@ -117,11 +115,12 @@ export default function Header() {
                   </li>
                   <li><a href="#">
                     <i className="fa fa-user" aria-hidden="true"></i>
-                    <span className="padding_10">User</span></a>
+                    <span className="padding_10">Cart</span></a>
                   </li>
                 </ul>
               </div>
             </div>
+            
           </div>
         </div>
       </div>
