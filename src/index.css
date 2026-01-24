@@ -130,3 +130,7 @@ body {
 .search-list { list-style: none; }
 .search-item { padding: 12px; border-bottom: 1px solid var(--border-color); }
 .search-item:last-child { border-bottom: none; }
+
+.embla { overflow: hidden; }
+.embla__container { display: flex; }
+.embla__slide { flex: 0 0 100%; text-align: center; }
