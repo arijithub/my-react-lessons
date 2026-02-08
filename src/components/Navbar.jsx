@@ -1,14 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { 
   AppBar, Toolbar, Typography, Button, Container, Box, 
   IconButton, InputBase, Paper, Menu, MenuItem, Badge 
 } from '@mui/material';
+import { AuthContext } from '../context/AuthContext';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PersonIcon from '@mui/icons-material/Person';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useNavigate } from 'react-router-dom';
+
+function AccountMenu() {
+  const [userAnchor, setUserAnchor] = useState(null);
+  const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  return (
+    <>
+      <Button startIcon={<PersonIcon />} sx={{ color: '#333' }} onClick={(e) => setUserAnchor(e.currentTarget)}>
+        {user ? user.name : 'Account'}
+      </Button>
+      <Menu anchorEl={userAnchor} open={Boolean(userAnchor)} onClose={() => setUserAnchor(null)}>
+        
+        {user ? (
+          <>
+          <MenuItem>{`Hello, ${user.name}`}</MenuItem>
+          <MenuItem onClick={() => { logout(); setUserAnchor(null); } }>Logout</MenuItem>
+          </>
+        ) : (
+          <>
+            <MenuItem onClick={() => { navigate('/login'); setUserAnchor(null); }}>Login</MenuItem>
+            <MenuItem onClick={() => { navigate('/signup'); setUserAnchor(null); }}>Sign Up</MenuItem>
+          </>
+        )}
+      </Menu>
+    </>
+  );
+}
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -38,7 +67,9 @@ const Navbar = () => {
             </Paper>
 
             <Button startIcon={<ShoppingCartIcon />} sx={{ color: '#333' }}>Cart</Button>
-            <Button startIcon={<PersonIcon />} sx={{ color: '#333' }}>User</Button>
+            {/* Account Menu */}
+            <AccountMenu />
+
           </Box>
         </Toolbar>
       </Container>

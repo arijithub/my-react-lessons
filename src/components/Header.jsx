@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   Drawer,
   IconButton,
@@ -7,6 +8,25 @@ import {
   TextField
 } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
+import { AuthContext } from '../context/AuthContext'
+
+function AuthLinks() {
+  const { user, logout } = useContext(AuthContext)
+  const navigate = useNavigate()
+  if (user) {
+    return (
+      <a onClick={() => logout()} style={{ cursor: 'pointer' }}>
+        <i className="fa fa-user" /> {user.name} — <span style={{ textDecoration: 'underline' }}>Sign out</span>
+      </a>
+    )
+  }
+  return (
+    <div>
+      <a onClick={() => navigate('/login')} style={{ cursor: 'pointer', marginRight: 8 }}><i className="fa fa-user" /> Login</a>
+      <a onClick={() => navigate('/signup')} style={{ cursor: 'pointer' }}>Sign Up</a>
+    </div>
+  )
+}
 
 export default function Header() {
   const [open, setOpen] = useState(false)
@@ -86,7 +106,8 @@ export default function Header() {
                 <a href="#"><i className="fa fa-shopping-cart" /> Cart</a>
               </li>
               <li>
-                <a href="#"><i className="fa fa-user" /> User</a>
+                {/* Auth-aware links */}
+                <AuthLinks />
               </li>
             </ul>
           </div>

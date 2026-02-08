@@ -1,5 +1,12 @@
-import React, { useState, useMemo, useCallback, memo, useRef, useEffect } from 'react';
+import React, { useState, useMemo, useCallback, memo, useRef, useEffect, useContext } from 'react';
+import { AuthContext } from './context/AuthContext';
+import PersonIcon from '@mui/icons-material/Person';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 import { 
   createTheme, ThemeProvider, CssBaseline, Box, Typography, 
   Button, IconButton, Drawer, Badge, useMediaQuery, 
@@ -147,6 +154,9 @@ const Home = () => {
   const bannerOpacity = useTransform(scrollY, [0, 500], [0.6, 0]); // Increased starting opacity for visibility
   const navBlur = useTransform(scrollY, [0, 100], [0, 15]);
 
+  const { user, logout } = useContext(AuthContext);
+  const [accountAnchor, setAccountAnchor] = useState(null);
+
   const products = useMemo(() => [
     { id: 1, name: 'Cyber Mobile', price: 1300, image: '/images/mobile-img.png' },
     { id: 2, name: 'Noir Drapery', price: 450, image: '/images/dress-shirt-img.png' },
@@ -202,6 +212,22 @@ const Home = () => {
               <ShoppingBagOutlinedIcon />
             </Badge>
           </IconButton>
+
+          {/* Account button */}
+          <IconButton onClick={(e) => setAccountAnchor(e.currentTarget)} sx={{ color: 'white', border: '1px solid rgba(255,255,255,0.08)' }}>
+            <PersonIcon />
+          </IconButton>
+
+          <Menu anchorEl={accountAnchor} open={Boolean(accountAnchor)} onClose={() => setAccountAnchor(null)}>
+            {user ? (
+              <MenuItem onClick={() => { logout(); setAccountAnchor(null); }}>Logout</MenuItem>
+            ) : (
+              <>
+                <MenuItem onClick={() => { window.location.href = '/login'; setAccountAnchor(null); }}>Login</MenuItem>
+                <MenuItem onClick={() => { window.location.href = '/signup'; setAccountAnchor(null); }}>Sign Up</MenuItem>
+              </>
+            )}
+          </Menu>
         </Stack>
       </motion.div>
 
@@ -326,9 +352,13 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-        </Routes>
+        <AuthProvider>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </ThemeProvider>
   );
