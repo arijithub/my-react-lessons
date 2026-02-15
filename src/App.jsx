@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { createTheme, ThemeProvider } from '@mui/material';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import Home from './pages/Home';
 import About from './pages/About';
 import Products from './pages/Products';
@@ -32,6 +33,7 @@ export default function App() {
             <Route path="/signup" element={<Signup />} />
           </Routes>
         </AuthProvider>
+        <SpeedInsights />
       </BrowserRouter>
     </ThemeProvider>
   );
