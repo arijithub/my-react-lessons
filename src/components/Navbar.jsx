@@ -11,6 +11,27 @@ import PersonIcon from '@mui/icons-material/Person';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useNavigate } from 'react-router-dom';
 
+// Account Menu Component (reusable for both Navbar and Home)
+export function AccountMenuPopper({ accountAnchor, setAccountAnchor }) {
+  const { user, logout } = useContext(AuthContext);
+
+  return (
+    <Menu anchorEl={accountAnchor} open={Boolean(accountAnchor)} onClose={() => setAccountAnchor(null)}>
+      {user ? (
+        <>
+          <MenuItem>{`Hello, ${user.name}`}</MenuItem>
+          <MenuItem onClick={() => { logout(); setAccountAnchor(null); }}>Logout</MenuItem>
+        </>
+      ) : (
+        <>
+          <MenuItem onClick={() => { window.location.href = '/login'; setAccountAnchor(null); }}>Login</MenuItem>
+          <MenuItem onClick={() => { window.location.href = '/signup'; setAccountAnchor(null); }}>Sign Up</MenuItem>
+        </>
+      )}
+    </Menu>
+  );
+}
+
 function AccountMenu() {
   const [userAnchor, setUserAnchor] = useState(null);
   const { user, logout } = useContext(AuthContext);
@@ -25,7 +46,7 @@ function AccountMenu() {
         
         {user ? (
           <>
-          <MenuItem>{`Hello, ${user.name}`}</MenuItem>
+         
           <MenuItem onClick={() => { logout(); setUserAnchor(null); } }>Logout</MenuItem>
           </>
         ) : (
