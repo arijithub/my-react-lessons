@@ -19,7 +19,7 @@ export function AccountMenuPopper({ accountAnchor, setAccountAnchor }) {
     <Menu anchorEl={accountAnchor} open={Boolean(accountAnchor)} onClose={() => setAccountAnchor(null)}>
       {user ? (
         <>
-          <MenuItem>{`Hello, ${user.name}`}</MenuItem>
+         
           <MenuItem onClick={() => { logout(); setAccountAnchor(null); }}>Logout</MenuItem>
         </>
       ) : (
@@ -68,10 +68,7 @@ const Navbar = () => {
     <AppBar position="sticky" sx={{ bgcolor: 'white', color: '#333' }} elevation={1}>
       <Container maxWidth="lg">
         <Toolbar disableGutters sx={{ py: 1 }}>
-           {/* Logo Placeholder (Text if image missing) */}
-           <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#252525', mr: 4, cursor: 'pointer' }} onClick={() => navigate('/')}>
-             Eflyer
-           </Typography>
+           
 
           <Box sx={{ display: { xs: 'none', md: 'flex' }, flexGrow: 1, alignItems: 'center', gap: 2 }}>
             <Button endIcon={<KeyboardArrowDownIcon />} onClick={(e) => setAnchorEl(e.currentTarget)} sx={{ bgcolor: '#f0f0f0', color: '#333' }}>

@@ -13,14 +13,22 @@ export default function SinglePostPage() {
       .then(data => setPost(data))
   }, [id]) // Re-run if the ID changes
 
-  if (!post) return <h2>Loading...</h2>
+  if (!post) return (
+    <div>
+      
+      <div style={{ paddingTop: '80px', padding: 20 }}>Loading...</div>
+    </div>
+  )
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>{post.title}</h1>
-      <p>{post.body}</p>
-      <hr />
-      <Link to="/blog">Back to Blog</Link>
+    <div>
+ 
+      <div style={{ paddingTop: '80px', padding: 20 }}>
+        <h1>{post.title}</h1>
+        <p>{post.body}</p>
+        <hr />
+        <Link to="/blog">Back to Blog</Link>
+      </div>
     </div>
   )
 }

@@ -7,6 +7,7 @@ import {
   MenuItem,
   TextField
 } from '@mui/material'
+import BrandIcon from './BrandIcon'
 import MenuIcon from '@mui/icons-material/Menu'
 import { AuthContext } from '../context/AuthContext'
 
@@ -48,10 +49,13 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Logo */}
+      {/* Logo (replaced with BrandIcon) */}
       <div className="logo_section">
         <div className="logo">
-          <img src="/images/logo.png" />
+          <div style={{ display: 'inline-block' }}>
+            {/* keep visual size similar to previous image */}
+            <BrandIcon onClick={() => window.location.href = '/'} />
+          </div>
         </div>
       </div>
 

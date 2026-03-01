@@ -9,6 +9,9 @@ import Shop from './pages/Shop';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Footer from './components/Footer';
+import CommonNavbar from './components/CommonNavbar';
+import { CartProvider } from './context/CartContext';
 
 const NEON_GOLD = '#FFD700';
 
@@ -22,15 +25,19 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <AuthProvider>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/shop" element={<Shop />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-          </Routes>
+          <CartProvider>
+            <CommonNavbar />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/shop" element={<Shop />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+            </Routes>
+            <Footer />
+          </CartProvider>
         </AuthProvider>
       </BrowserRouter>
     </ThemeProvider>

@@ -10,7 +10,7 @@ const GLASS = 'rgba(15, 15, 15, 0.7)';
 const FAQ = () => {
   const [expanded, setExpanded] = useState(false);
 
-  const faqs = useMemo(() => [
+  const faqstitle = useMemo(() => [
     {
       id: 1,
       question: 'How long does shipping take?',
@@ -43,6 +43,9 @@ const FAQ = () => {
     }
   ], []);
 
+
+ 
+
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
@@ -58,7 +61,7 @@ const FAQ = () => {
 
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.8 }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-            {faqs.map((faq, idx) => (
+            {faqstitle.map((faq, idx) => (
               <motion.div
                 key={faq.id}
                 initial={{ opacity: 0, x: -20 }}

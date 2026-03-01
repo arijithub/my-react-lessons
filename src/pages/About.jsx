@@ -1,7 +1,6 @@
 import React from 'react';
 import { Box, Typography, Container, Stack, Card } from '@mui/material';
 import { motion } from 'framer-motion';
-import CommonNavbar from '../components/CommonNavbar';
 
 const NEON_GOLD = '#FFD700';
 const BORDER = '1px solid rgba(255, 215, 0, 0.2)';
@@ -17,7 +16,7 @@ const About = () => {
 
   return (
     <Box sx={{ bgcolor: '#000', color: '#fff', minHeight: '100vh', pt: { xs: 12, md: 15 }, pb: { xs: 6, md: 10 }, px: { xs: 1.5, md: 0 } }}>
-      <CommonNavbar />
+    
       <Container maxWidth="lg" sx={{ px: { xs: 2, md: 4 } }}>
         {/* Hero Section */}
         <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>

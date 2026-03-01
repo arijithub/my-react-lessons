@@ -1,8 +1,5 @@
 import React, { useState, useMemo, useCallback, memo, useRef, useEffect, useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
-import PersonIcon from '@mui/icons-material/Person';
-import { AccountMenuPopper } from '../components/Navbar';
+import { CartContext } from '../context/CartContext';
 import ProductRecommendations from '../components/ProductRecommendations';
 import Reviews from '../components/Reviews';
 import Newsletter from '../components/Newsletter';
@@ -16,18 +13,16 @@ import SocialProof from '../components/SocialProof';
 import CallToAction from '../components/CallToAction';
 import VideoSection from '../components/VideoSection';
 import Testimonials from '../components/Testimonials';
+
 import { 
   createTheme, CssBaseline, Box, Typography, 
-  Button, IconButton, Drawer, Badge, useMediaQuery, 
-  Avatar, Container, Stack, Skeleton, List, ListItem, ListItemText 
+  Button, useMediaQuery, 
+  Container, Stack, Skeleton
 } from '@mui/material';
+import BrandIcon from '../components/BrandIcon';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 
 // Icons
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
-import CloseIcon from '@mui/icons-material/Close';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import MenuIcon from '@mui/icons-material/Menu';
 
 // Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -109,7 +104,7 @@ const ParticleTrail = () => {
 const SmartImage = ({ src, alt }) => {
   const [loaded, setLoaded] = useState(false);
   return (
-    <Box sx={{ position: 'relative', width: '100%', height: '220px', display: 'flex', justifyContent: 'center' }}>
+    <Box sx={{ position: 'relative', width: '100%', height: { xs: '180px', md: '220px' }, display: 'flex', justifyContent: 'center' }}>
       {!loaded && <Skeleton variant="rectangular" width="70%" height="100%" sx={{ bgcolor: 'rgba(255,215,0,0.05)', borderRadius: '20px' }} />}
       <motion.img 
         src={src} alt={alt} onLoad={() => setLoaded(true)}
@@ -123,26 +118,26 @@ const SmartImage = ({ src, alt }) => {
 
 const ProductCard = memo(({ product, onAdd }) => (
   <Box sx={{ 
-    height: { xs: 450, md: 550 },
+    height: { xs: 300, md: 550 },        // shrink card height on mobile
     bgcolor: GLASS,
     backdropFilter: 'blur(20px)',
     border: BORDER,
     borderRadius: '35px',
-    p: { xs: 3, md: 5 },
+    p: { xs: 1.5, md: 5 },              // tighter padding for compact look
     display: 'flex',
     flexDirection: 'column',
     transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-    '&:hover': { borderColor: NEON_GOLD, transform: 'translateY(-15px)', boxShadow: `0 20px 40px rgba(255,215,0,0.15)` }
+    '&:hover': { borderColor: NEON_GOLD, transform: { md: 'translateY(-15px)' }, boxShadow: `0 20px 40px rgba(255,215,0,0.15)` }
   }}>
     <SmartImage src={product.image} alt={product.name} />
     <Box sx={{ mt: 'auto' }}>
-      <Typography variant="h6" sx={{ fontWeight: 900, mb: 1, textTransform: 'uppercase', letterSpacing: 2 }}>{product.name}</Typography>
+      <Typography variant="h6" sx={{ fontWeight: 900, mb: 1, fontSize: { xs: '0.9rem', md: '1.25rem' }, textTransform: 'uppercase', letterSpacing: { xs: 1, md: 2 } }}>{product.name}</Typography>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <Typography variant="h5" sx={{ fontWeight: 200, color: NEON_GOLD }}>${product.price}</Typography>
+        <Typography variant="h5" sx={{ fontWeight: 200, color: NEON_GOLD, fontSize: { xs: '1rem', md: '1.5rem' } }}>${product.price}</Typography>
         <Button 
           variant="contained" 
           onClick={() => onAdd(product)}
-          sx={{ bgcolor: 'white', color: 'black', borderRadius: '12px', px: 3, fontWeight: 900, '&:hover': { bgcolor: NEON_GOLD } }}
+          sx={{ bgcolor: 'white', color: 'black', borderRadius: '12px', px: { xs: 2, md: 3 }, py: { xs: 0.5, md: 1 }, fontWeight: 900, '&:hover': { bgcolor: NEON_GOLD } }}
         >
           ACQUIRE
         </Button>
@@ -152,18 +147,14 @@ const ProductCard = memo(({ product, onAdd }) => (
 ));
 
 const Home = () => {
-  const navigate = useNavigate();
-  const [cart, setCart] = useState([]);
-  const [cartOpen, setCartOpen] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const { addToCart } = useContext(CartContext);
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const { scrollY } = useScroll();
   const bannerScale = useTransform(scrollY, [0, 500], [1, 1.2]);
   const bannerOpacity = useTransform(scrollY, [0, 500], [0.6, 0]);
-  const navBlur = useTransform(scrollY, [0, 100], [0, 15]);
 
-  const [accountAnchor, setAccountAnchor] = useState(null);
+  // account anchor no longer needed in this page
 
   const products = useMemo(() => [
     { id: 1, name: 'Cyber Mobile', price: 1300, image: 'https://images.unsplash.com/photo-1556656793-08538906a9f8?w=400' },
@@ -181,9 +172,8 @@ const Home = () => {
   ], []);
 
   const handleAdd = useCallback((p) => {
-    setCart(prev => [...prev, { ...p, cid: Math.random() }]);
-    setCartOpen(true);
-  }, []);
+    addToCart(p);
+  }, [addToCart]);
 
   return (
     <Box sx={{ bgcolor: '#000', color: '#fff', minHeight: '100vh', overflowX: 'hidden' }}>
@@ -206,47 +196,28 @@ const Home = () => {
         <Box sx={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent, #000)' }} />
       </Box>
 
-      {/* --- GLASS NAV --- */}
-      <motion.div style={{ backdropFilter: `blur(${navBlur}px)`, position: 'fixed', top: 0, width: '100%', zIndex: 1000 }}>
-        <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ p: { xs: 2, md: 4 } }}>
-          <IconButton 
-            onClick={() => setMenuOpen(true)} 
-            sx={{ color: 'white', border: '1px solid rgba(255,255,255,0.1)' }}
-          >
-            <MenuIcon />
-          </IconButton>
-          
-          <Typography variant="h6" sx={{ fontWeight: 900, letterSpacing: { xs: 2, md: 8 }, ml: 2 }}>EFLYER</Typography>
-          
-          <IconButton onClick={() => setCartOpen(true)} sx={{ color: NEON_GOLD, border: BORDER, bgcolor: 'rgba(0,0,0,0.3)' }}>
-            <Badge badgeContent={cart.length} color="error" sx={{ '& .MuiBadge-badge': { fontWeight: 900 } }}>
-              <ShoppingBagOutlinedIcon />
-            </Badge>
-          </IconButton>
-
-          {/* Account button */}
-          <IconButton onClick={(e) => setAccountAnchor(e.currentTarget)} sx={{ color: 'white', border: '1px solid rgba(255,255,255,0.08)' }}>
-            <PersonIcon />
-          </IconButton>
-
-          <AccountMenuPopper accountAnchor={accountAnchor} setAccountAnchor={setAccountAnchor} />
-        </Stack>
-      </motion.div>
 
       {/* --- HERO --- */}
-      <Container maxWidth="xl" sx={{ pt: { xs: 20, md: 35 }, pb: 10, position: 'relative' }}>
+      <Container maxWidth="xl" sx={{ pt: { xs: 12, md: 22 }, pb: { xs: 3, md: 6 }, position: 'relative' }}>
         <motion.div initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1 }}>
-          <Typography sx={{ fontSize: { xs: '2.5rem', md: '8rem' }, fontWeight: 900, lineHeight: 0.8, textAlign: 'center', textTransform: 'uppercase', mb: 2 }}>
-            THE <br /> <span style={{ color: NEON_GOLD, textShadow: `0 0 30px ${NEON_GOLD}66` }}>ULTRA</span> VAULT
+          <Typography sx={{ 
+            fontSize: 'clamp(2.5rem, 8vw, 8rem)', 
+            fontWeight: 900, 
+            lineHeight: { xs: 1.1, md: 0.8 }, 
+            textAlign: 'center', 
+            textTransform: 'uppercase', 
+            mb: { xs: 2, md: 1 } 
+          }}>
+            THE {isMobile ? '' : <br />} <span style={{ color: NEON_GOLD, textShadow: `0 0 30px ${NEON_GOLD}66` }}>ULTRA</span> 
           </Typography>
-          <Typography sx={{ textAlign: 'center', opacity: 0.5, letterSpacing: 4, fontSize: '0.8rem' }}>
-            [ ESTABLISHED 2026 // NEURAL COMMERCE ]
+          <Typography sx={{ textAlign: 'center', opacity: 0.5, letterSpacing: { xs: 2, md: 4 }, fontSize: { xs: '0.65rem', md: '0.8rem' } }}>
+            ESTABLISHED 2026 
           </Typography>
         </motion.div>
       </Container>
 
       {/* --- SHOWCASE --- */}
-      <Box sx={{ py: 10 }}>
+      <Box sx={{ py: { xs: 5, md: 10 } }}>
         <Swiper
           modules={[Autoplay, EffectCoverflow, Pagination]}
           effect="coverflow"
@@ -258,147 +229,30 @@ const Home = () => {
           coverflowEffect={{ rotate: 5, stretch: 0, depth: 100, modifier: 2.5, slideShadows: false }}
         >
           {products.map((p) => (
-            <SwiperSlide key={p.id} style={{ width: isMobile ? '300px' : '480px' }}>
+            <SwiperSlide key={p.id} style={{ width: isMobile ? '70vw' : '480px', maxWidth: isMobile ? '300px' : '480px' }}>
               <ProductCard product={p} onAdd={handleAdd} />
             </SwiperSlide>
           ))}
         </Swiper>
       </Box>
 
-      {/* --- PRODUCT RECOMMENDATIONS --- */}
+      {/* --- EXTERNAL COMPONENTS --- */}
       <ProductRecommendations />
-
-      {/* --- REVIEWS --- */}
       <Reviews />
-
-      {/* --- NEWSLETTER --- */}
       <Newsletter />
-
-      {/* --- CATEGORIES SHOWCASE --- */}
       <CategoriesShowcase />
-
-      {/* --- FLASH SALES --- */}
       <FlashSales />
-
-      {/* --- BRAND PARTNERS --- */}
       <BrandPartners />
-
-      {/* --- STATISTICS --- */}
       <Statistics />
-
-      {/* --- FEATURES --- */}
       <Features />
-
-      {/* --- SOCIAL PROOF --- */}
       <SocialProof />
-
-      {/* --- CALL TO ACTION --- */}
       <CallToAction />
-
-      {/* --- VIDEO SECTION --- */}
       <VideoSection />
-
-      {/* --- TESTIMONIALS --- */}
       <Testimonials />
-
-      {/* --- FAQ --- */}
       <FAQ />
 
-      {/* --- SIDE MENU DRAWER --- */}
-      <Drawer
-        anchor="left"
-        open={menuOpen}
-        onClose={() => setMenuOpen(false)}
-        PaperProps={{ sx: { width: 300, bgcolor: '#080808', borderRight: BORDER } }}
-      >
-        <Box sx={{ p: 4 }}>
-          <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 4 }}>
-            <Typography variant="h6" sx={{ fontWeight: 900 }}>NAVIGATION</Typography>
-            <IconButton onClick={() => setMenuOpen(false)}><CloseIcon /></IconButton>
-          </Stack>
-          <List>
-            {[
-              { label: 'Home', path: '/' },
-              { label: 'About Us', path: '/about' },
-              { label: 'Products', path: '/products' },
-              { label: 'Shop', path: '/shop' },
-              { label: 'Contact Us', path: '/contact' }
-            ].map((item) => (
-              <ListItem 
-                button 
-                key={item.label} 
-                sx={{ py: 2 }}
-                onClick={() => {
-                  navigate(item.path);
-                  setMenuOpen(false);
-                }}
-              >
-                <ListItemText primary={item.label} primaryTypographyProps={{ fontWeight: 900, letterSpacing: 2 }} />
-              </ListItem>
-            ))}
-          </List>
-        </Box>
-      </Drawer>
 
-      {/* --- CART DRAWER --- */}
-      <Drawer 
-        anchor="right" open={cartOpen} onClose={() => setCartOpen(false)} 
-        sx={{ zIndex: 12000 }}
-        PaperProps={{ 
-          sx: { width: { xs: '100vw', sm: 450 }, bgcolor: '#080808', borderLeft: BORDER, backgroundImage: 'none' } 
-        }}
-      >
-        <Box sx={{ p: 4, height: '100%', display: 'flex', flexDirection: 'column' }}>
-          <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 6 }}>
-            <Typography variant="h5" sx={{ fontWeight: 900 }}>VAULT_LIST</Typography>
-            <IconButton onClick={() => setCartOpen(false)} sx={{ color: 'white', border: '1px solid #222' }}><CloseIcon /></IconButton>
-          </Stack>
-
-          <Box sx={{ flex: 1, overflowY: 'auto' }}>
-            <AnimatePresence mode="popLayout">
-              {cart.length === 0 ? (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                  <Typography sx={{ textAlign: 'center', mt: 10, opacity: 0.3 }}>VAULT IS EMPTY</Typography>
-                </motion.div>
-              ) : (
-                cart.map((item, i) => (
-                  <motion.div 
-                    key={item.cid} layout
-                    initial={{ x: 100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: -100, opacity: 0 }}
-                    transition={{ type: 'spring', damping: 20, delay: i * 0.05 }}
-                  >
-                    <Stack direction="row" spacing={2} sx={{ mb: 3, p: 2, borderRadius: '25px', bgcolor: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}>
-                      <Avatar src={item.image} variant="rounded" sx={{ width: 60, height: 60, border: BORDER }} />
-                      <Box sx={{ flex: 1 }}>
-                        <Typography variant="subtitle2" sx={{ fontWeight: 900 }}>{item.name}</Typography>
-                        <Typography variant="h6" sx={{ color: NEON_GOLD, fontSize: '1rem' }}>${item.price}</Typography>
-                      </Box>
-                      <IconButton onClick={() => setCart(c => c.filter(prev => prev.cid !== item.cid))}>
-                        <DeleteOutlineIcon sx={{ color: 'rgba(255,255,255,0.3)' }} />
-                      </IconButton>
-                    </Stack>
-                  </motion.div>
-                ))
-              )}
-            </AnimatePresence>
-          </Box>
-
-          <Box sx={{ pt: 4, borderTop: '1px solid #222' }}>
-            <Stack direction="row" justifyContent="space-between" sx={{ mb: 3 }}>
-              <Typography sx={{ opacity: 0.5 }}>TOTAL_VALUE</Typography>
-              <Typography variant="h5" sx={{ fontWeight: 900, color: NEON_GOLD }}>
-                ${cart.reduce((sum, item) => sum + item.price, 0)}
-              </Typography>
-            </Stack>
-            <Button 
-              fullWidth variant="contained" 
-              sx={{ py: 2.5, bgcolor: NEON_GOLD, color: 'black', fontWeight: 900, borderRadius: '15px', '&:hover': { bgcolor: '#fff' } }}
-            >
-              INITIALIZE CHECKOUT
-            </Button>
-          </Box>
-        </Box>
-      </Drawer>
+      
     </Box>
   );
 };

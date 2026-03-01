@@ -5,7 +5,6 @@ import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import SendIcon from '@mui/icons-material/Send';
-import CommonNavbar from '../components/CommonNavbar';
 
 const NEON_GOLD = '#FFD700';
 const BORDER = '1px solid rgba(255, 215, 0, 0.2)';
@@ -50,9 +49,8 @@ const Contact = () => {
   ];
 
   return (
-    <Box sx={{ bgcolor: '#000', color: '#fff', minHeight: '100vh', pt: { xs: 12, md: 15 }, pb: { xs: 6, md: 10 }, px: { xs: 1.5, md: 0 } }}>
-      <CommonNavbar />
-      <Container maxWidth="lg" sx={{ px: { xs: 2, md: 4 } }}>
+    <Box sx={{ bgcolor: '#000', color: '#fff', minHeight: '100vh' }}>
+      <Container maxWidth="lg" sx={{ px: { xs: 2, md: 4 }, paddingTop: '80px', pb: { xs: 6, md: 10 } }}>
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
           <Box sx={{ textAlign: 'center', mb: { xs: 6, md: 10 } }}>

@@ -33,8 +33,10 @@ export default function Login() {
   }
 
   return (
-    <Box sx={{ bgcolor: '#000', color: '#fff', minHeight: '100vh', display: 'flex', alignItems: 'center', py: { xs: 4, md: 0 }, px: { xs: 2, md: 0 } }}>
-      <Container maxWidth="sm">
+    <Box sx={{ bgcolor: '#000', color: '#fff', minHeight: '100vh' }}>
+  
+      <Box sx={{ display: 'flex', alignItems: 'center', py: { xs: 4, md: 0 }, px: { xs: 2, md: 0 }, paddingTop: '80px' }}>
+        <Container maxWidth="sm">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
           <Card sx={{ bgcolor: GLASS, border: BORDER, borderRadius: '20px', p: { xs: 3, md: 5 } }}>
             {/* Header */}
@@ -187,6 +189,7 @@ export default function Login() {
           </Card>
         </motion.div>
       </Container>
+    </Box>
     </Box>
   );
 }
