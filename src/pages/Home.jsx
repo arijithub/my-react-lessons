@@ -157,18 +157,18 @@ const Home = () => {
   // account anchor no longer needed in this page
 
   const products = useMemo(() => [
-    { id: 1, name: 'Cyber Mobile', price: 1300, image: 'https://images.unsplash.com/photo-1556656793-08538906a9f8?w=400' },
-    { id: 2, name: 'Noir Drapery', price: 450, image: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400' },
-    { id: 3, name: 'Titanium Logic', price: 2500, image: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400' },
-    { id: 4, name: 'Royal Jhumka', price: 890, image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400' },
-    { id: 5, name: 'Gold Necklace', price: 2200, image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400' },
-    { id: 6, name: 'Cyber Computer', price: 3200, image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400' },
-    { id: 7, name: 'V-Neck Tee', price: 1200, image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400' },
-    { id: 8, name: 'Women Jacket', price: 2400, image: 'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=400' },
-    { id: 9, name: 'Kangan Set', price: 800, image: 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=400' },
-    { id: 10, name: 'Wireless Headphones', price: 1800, image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400' },
-    { id: 11, name: 'Smart Watch', price: 2100, image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400' },
-    { id: 12, name: 'Vintage Camera', price: 1600, image: 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400' }
+    { id: 1, name: 'Cyber Mobile', price: 1300, image: 'https://images.unsplash.com/photo-1556656793-08538906a9f8' },
+    { id: 2, name: 'Noir Drapery', price: 450, image: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35' },
+    { id: 3, name: 'Titanium Logic', price: 2500, image: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46' },
+    { id: 4, name: 'Royal Jhumka', price: 890, image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f' },
+    { id: 5, name: 'Gold Necklace', price: 2200, image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908' },
+    { id: 6, name: 'Cyber Computer', price: 3200, image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71' },
+    { id: 7, name: 'V-Neck Tee', price: 1200, image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab' },
+    { id: 8, name: 'Women Jacket', price: 2400, image: 'https://images.unsplash.com/photo-1591195853828-11db59a44f6b' },
+    { id: 9, name: 'Kangan Set', price: 800, image: 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0' },
+    { id: 10, name: 'Wireless Headphones', price: 1800, image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e' },
+    { id: 11, name: 'Smart Watch', price: 2100, image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30' },
+    { id: 12, name: 'Vintage Camera', price: 1600, image: 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f' }
   ], []);
 
   const handleAdd = useCallback((p) => {
@@ -176,7 +176,7 @@ const Home = () => {
   }, [addToCart]);
 
   return (
-    <Box sx={{ bgcolor: '#000', color: '#fff', minHeight: '100vh', overflowX: 'hidden' }}>
+    <Box sx={{ bgcolor: 'background.default', color: 'text.primary', minHeight: '100vh', overflowX: 'hidden' }}>
       <CssBaseline />
       <ParticleTrail />
 

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { Box, Typography, Container, TextField, Button, Stack, Card, Alert, Divider, Link as MuiLink } from '@mui/material';
+import { Box, Typography, Container, TextField, Button, Stack, Card, Alert, Divider, IconButton, Link as MuiLink } from '@mui/material';
 import { motion } from 'framer-motion';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
@@ -33,7 +33,7 @@ export default function Login() {
   }
 
   return (
-    <Box sx={{ bgcolor: '#000', color: '#fff', minHeight: '100vh' }}>
+    <Box sx={{ bgcolor: 'background.default', color: 'text.primary', minHeight: '100vh' }}>
   
       <Box sx={{ display: 'flex', alignItems: 'center', py: { xs: 4, md: 0 }, px: { xs: 2, md: 0 }, paddingTop: '80px' }}>
         <Container maxWidth="sm">
@@ -103,7 +103,15 @@ export default function Login() {
                     required
                     placeholder="••••••••"
                     InputProps={{
-                      startAdornment: <LockIcon sx={{ mr: 1.5, color: NEON_GOLD, fontSize: { xs: '1.2rem', md: '1.5rem' } }} />,
+                      startAdornment: (
+                        <IconButton
+                          sx={{ mr: 1, color: NEON_GOLD }}
+                          onClick={() => navigate('/')}
+                          size="small"
+                        >
+                          <LockIcon sx={{ fontSize: { xs: '1.2rem', md: '1.5rem' } }} />
+                        </IconButton>
+                      ),
                     }}
                     sx={{
                       '& .MuiOutlinedInput-root': {

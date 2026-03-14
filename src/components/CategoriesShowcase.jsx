@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Box, Typography, Container, Card, Chip, useMediaQuery } from '@mui/material';
 import { motion } from 'framer-motion';
-import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper/modules';
 
@@ -24,6 +24,9 @@ const CategoriesShowcase = () => {
     { id: 7, name: 'Books & Media', icon: '📚', products: '950+' },
     { id: 8, name: 'Toys & Games', icon: '🎮', products: '1,420+' }
   ], []);
+
+  const navigate = useNavigate();
+  const handleCategoryClick = (categoryId) => navigate(`/products?categoryId=${categoryId}`);
 
   return (
     <Box sx={{ py: { xs: 6, md: 10 }, bgcolor: 'transparent', color: '#fff', px: { xs: 2, md: 0 } }}>
@@ -54,6 +57,7 @@ const CategoriesShowcase = () => {
                   transition={{ duration: 0.4 }}
                 >
                   <Card
+                    onClick={() => handleCategoryClick(cat.id)}
                     sx={{
                       width: 160,
                       height: 160,
@@ -115,6 +119,7 @@ const CategoriesShowcase = () => {
               transition={{ duration: 0.6, delay: idx * 0.1 }}
             >
               <Card
+                onClick={() => handleCategoryClick(cat.id)}
                 sx={{
                   width: { xs: '100%', md: 160 },
                   height: { xs: 160, md: 190 },

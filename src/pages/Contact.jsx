@@ -49,7 +49,7 @@ const Contact = () => {
   ];
 
   return (
-    <Box sx={{ bgcolor: '#000', color: '#fff', minHeight: '100vh' }}>
+    <Box sx={{ bgcolor: 'background.default', color: 'text.primary', minHeight: '100vh' }}>
       <Container maxWidth="lg" sx={{ px: { xs: 2, md: 4 }, paddingTop: '80px', pb: { xs: 6, md: 10 } }}>
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>

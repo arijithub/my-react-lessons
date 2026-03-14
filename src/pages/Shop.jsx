@@ -28,7 +28,7 @@ const Shop = () => {
   ], []);
 
   return (
-    <Box sx={{ bgcolor: '#000', color: '#fff', minHeight: '100vh', pt: { xs: 12, md: 15 }, pb: { xs: 6, md: 10 }, px: { xs: 1.5, md: 0 } }}>
+    <Box sx={{ bgcolor: 'background.default', color: 'text.primary', minHeight: '100vh', pt: { xs: 12, md: 15 }, pb: { xs: 6, md: 10 }, px: { xs: 1.5, md: 0 } }}>
      
       <Container maxWidth="xl" sx={{ px: { xs: 2, md: 4 } }}>
         {/* Header */}
@@ -127,7 +127,7 @@ const Shop = () => {
                 <motion.div whileHover={{ scale: 1.05 }}>
                   <Button
                     startIcon={<ShoppingBagIcon />}
-                    onClick={() => navigate('/products', { state: { category: cat.name.toLowerCase() } })}
+                    onClick={() => navigate(`/products?categoryId=${cat.id}`)}
                     sx={{
                       bgcolor: cat.color,
                       color: 'black',

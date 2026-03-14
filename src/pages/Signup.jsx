@@ -35,7 +35,7 @@ export default function Signup() {
   }
 
   return (
-    <Box sx={{ bgcolor: '#000', color: '#fff', minHeight: '100vh' }}>
+    <Box sx={{ bgcolor: 'background.default', color: 'text.primary', minHeight: '100vh' }}>
   
       <Box sx={{ display: 'flex', alignItems: 'center', py: { xs: 4, md: 0 }, px: { xs: 2, md: 0 }, paddingTop: '80px' }}>
         <Container maxWidth="sm">
